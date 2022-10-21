@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--1定义数据源-->
+    <!-- 1.1 jdbc 数据源配置 -->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Shanghai&amp;
+                                    autoReconnect=true&amp;useSSL=false&amp;
+                                    characterEncoding=utf8&amp;
+                                    useUnicode=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!--2. 定义一个MyBatis⼯⼚类的bean：让spring帮助创建一个工厂对象 -->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注⼊数据源 （使用那个数据库）-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--指定核⼼mybatis配置⽂件位置（别名.mapper.xml） -->
+        <property name="configLocation"
+                  value="classpath:mybatis-integration.xml"/>
+    </bean>
+
+    <!--3配置MapperScannerConfigurer，配置扫描mapper接⼝所在的包-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--可以使⽤通配符：*-代表⼀层包；**-代表任意层级包-->
+        <property name="basePackage"
+                  value="com.cxs.**.dao"/>
+    </bean>
+
+    <!--4、开启⾃动扫描-->
+    <!--可以使⽤通配符：*-代表⼀层包；**-代表任意层级包-->
+    <context:component-scan base-package="com.cxs.**.service.impl"/>
+
+</beans>

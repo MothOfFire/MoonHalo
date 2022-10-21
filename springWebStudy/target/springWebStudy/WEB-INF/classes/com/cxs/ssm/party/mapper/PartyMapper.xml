@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxs.ssm.party.dao.PartyMapper">
+    <resultMap id="partyResult"
+               type="com.cxs.ssm.party.model.Party" >
+        <id column="party_id" property="partyId"
+            jdbcType="INTEGER" />
+        <result column="party_name" property="partyName"
+                jdbcType="VARCHAR" />
+        <result column="party_type" property="partyType"
+                jdbcType="VARCHAR" />
+        <result column="party_level" property="partyLevel"
+                jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="address" property="address"
+                jdbcType="VARCHAR" />
+    </resultMap>
+
+    <!--添加 (⽤到别名party，要在mybatis-config.xml中配置)-->
+    <insert id="addParty" parameterType="party">
+        insert into party (party_name,party_type,
+                           party_level,phone,address)
+        values(#{partyName},#{partyType},
+               #{partyLevel},#{phone},#{address});
+    </insert>
+
+    <!--删除 -->
+    <delete id="deleteParty" parameterType="Integer">
+        delete from party where party_id = #{partyId};
+    </delete>
+
+    <!--修改 -->
+    <update id="updateParty" parameterType="party">
+        update party set party_name=#{partyName},
+                         party_Type=#{partyType},
+                         party_level=#{partyLevel},
+                         phone=#{phone},
+                         address=#{address}
+        where party_id = #{partyId};
+    </update>
+
+    <!--根据id查询 -->
+    <select id="findPartyById" parameterType="Integer"
+            resultMap="partyResult">
+        select * from party where party_id = #{partyId};
+    </select>
+
+    <!--查询所有-->
+    <select id="findAllParty"
+            resultMap="partyResult">
+        select * from party;
+    </select>
+
+</mapper>

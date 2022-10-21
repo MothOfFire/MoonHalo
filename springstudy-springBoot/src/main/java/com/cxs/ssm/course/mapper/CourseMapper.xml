@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--CourseMapper.xml是mapper接口类（courseMapper.java）的实现-->
+<!--基于接口的整合，这里namespace指向的是接口类：CourseMapper.java-->
+
+<mapper namespace="com.cxs.ssm.course.dao.CourseMapper">
+    <!--定义映射转换器，把数据库的记录转换成java对象-->
+    <resultMap id="courseResultMapper"
+               type="com.cxs.ssm.course.model.Course" >
+        <!--
+        property是java模型类的属性；
+        column是数据表的列名称；
+        jdbcType是数据库列的类型；
+        -->
+        <id column="course_id" property="courseId" jdbcType="BIGINT" />
+        <result column="course_title" property="courseTitle" jdbcType="VARCHAR" />
+        <result column="course_code" property="courseCode" jdbcType="VARCHAR" />
+        <result column="course_type" property="courseType" jdbcType="VARCHAR" />
+        <result column="course_credit" property="courseCredit" jdbcType="VARCHAR" />
+        <result column="course_hours" property="courseHours" jdbcType="VARCHAR" />
+        <result column="term" property="term" jdbcType="VARCHAR" />
+        <result column="course_desc" property="courseDesc" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--接口方法的实现-->
+    <!--实现添加课程的方法 -->
+    <!--
+        参数有两种写法
+        1.全路径类名“com.cxs.ssm.course.model.Course”
+        2.可以用别名（在mybatis里面定义一个别名：course）
+    -->
+    <insert id="addCourse" parameterType="course">
+        insert into
+            courses(course_title,course_code,course_type,
+                    course_credit,course_hours,term,course_desc)
+        values(#{courseTitle},#{courseCode},#{courseType},
+               #{courseCredit},#{courseHours},#{term},#{courseDesc});
+    </insert>
+
+    <!--删除信息 -->
+    <delete id="deleteCourse" parameterType="Integer">
+        delete from courses where course_id = #{courseId};
+    </delete>
+
+    <!--修改信息 -->
+    <update id="updateCourse" parameterType="course">
+        update courses
+          set course_title=#{courseTitle},course_code=#{courseCode},
+              course_type=#{courseType},course_credit=#{courseCredit},
+              course_hours=#{courseHours},term=#{term},
+              course_desc=#{courseDesc}
+        where course_id = #{courseId};
+    </update>
+
+    <!--根据id查询 -->
+    <!--传入一个参数返回一个结果（需要上面定义的转换器（courseResultMapper）进行映射转换-->
+    <select id="findCourseById" parameterType="Integer"
+            resultMap="courseResultMapper">
+        select * from courses where course_id = #{courseId};
+    </select>
+
+    <!--查询所有-->
+    <select id="findAllCourses" resultMap="courseResultMapper">
+        select * from courses;
+    </select>
+
+</mapper>

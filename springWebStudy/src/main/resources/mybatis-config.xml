@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--配置(定义)别名,可以在mapper.xml中使用 -->
+    <typeAliases>
+<!--        <typeAlias type="com.cxs.ssm.party.model.Party" alias="party"></typeAlias>-->
+        <!--定义Mapper中引⽤到的业务对象类的位置-->
+        <package name="com.cxs.ssm.party.model" />
+        <!--可以放多个-->
+        <!--<package name="com.ssm.course.xxx.model" />-->
+    </typeAliases>
+    <!--配置(定义)Mapper.xml的位置 -->
+    <mappers>
+        <!--这里使用路径名，用'/'隔开,最后要.xml-->
+        <mapper resource="com/cxs/ssm/party/mapper/PartyMapper.xml" />
+        <!--可以放多个-->
+        <!--<mapper resource="com/cxs/ssm/user/mapper/XXXXMapper.xml" />-->
+    </mappers>
+</configuration>

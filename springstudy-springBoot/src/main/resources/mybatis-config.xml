@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config
+3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--1.配置环境 ，默认的环境id为dev-->
+    <environments default="dev">
+    <!--1.2.配置id为dev的数据库环境 -->
+        <environment id="dev">
+    <!-- 使⽤JDBC的事务管理 -->
+            <transactionManager type="JDBC" />
+    <!--数据库连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver"
+                          value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Shanghai&amp;
+                                 autoReconnect=true&amp;
+                                 useSSL=false&amp;
+                                 characterEncoding=utf8&amp;
+                                 useUnicode=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+              </dataSource>
+         </environment>
+    </environments>
+    <!--2.配置Mapper的位置,可以通过包名或路径名称等来找，下面用的是路径名称，并且可以写多个 -->
+    <mappers>
+        <mapper resource="com/cxs/ssm/mybatis/mapper/BookMapper.xml" />
+    </mappers>
+</configuration>

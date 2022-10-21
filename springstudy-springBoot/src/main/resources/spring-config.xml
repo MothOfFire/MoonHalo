@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--声明⼀个java bean，让spring管理java 对象, 对象的首字母一般是小写-->
+    <bean id="student"
+          class="com.cxs.ssm.spring.bean.Student">
+        <!--基本类型的注入，使用value-->
+        <property name="id" value="19912024"/>
+        <property name="name" value="王曦辰"/>
+        <property name="sex" value="女"/>
+    </bean>
+    <!--或<bean id="student"
+          class="com.cxs.ssm.spring.bean.Student"/>-->
+
+    <!--依赖注⼊⽅式⼀:构造器注⼊,name要与School类中构造函数的参数的相等-->
+    <bean id="school1" class="com.cxs.ssm.spring.bean.School1">
+        <!--对象类型的注入：使用ref-->
+        <constructor-arg name="s" ref="student"/>
+    </bean>
+
+    <!--属性赋值注入-->
+    <bean id="school2"
+          class="com.cxs.ssm.spring.bean.School2">
+        <property name="student" ref="student"/>
+        <property name="schoolName" value="hbxy"/>
+    </bean>
+
+    <!--Bean实例化⽅法-->
+    <!--1、构造器实例化-同时注⼊属性值 -->
+    <bean id="cookie1"
+          class="com.cxs.ssm.spring.instance.Cookie">
+        <property name="type" value="威化饼⼲"/>
+        <property name="productTime" value="2010-01-01"/>
+    </bean>
+
+    <!--2、静态⼯⼚⽅法实例化-->
+    <!--通过BeanStaticFactory类的静态⽅法cookieFactory创建cookie2-->
+    <bean id="cookie2"
+          class="com.cxs.ssm.spring.instance.BeanStaticFactory"
+          factory-method="cookieFactory">
+    </bean>
+
+    <!--3、实例⼯⼚⽅法实例化-->
+    <!--3.1 先实例化BeanInstanceFactory-->
+    <bean id="beanfactory"
+          class="com.cxs.ssm.spring.instance.BeanInstanceFactory"/>
+    <!--3.2 通过beanFactory调⽤createCookie⽅法创建cookie3-->
+    <bean id="cookie3"
+          factory-bean="beanfactory"
+          factory-method="createCookie"/>
+
+    <!--bean作⽤域-->
+    <!--1 单例模式(默认),整个spring容器只有⼀个实例-->
+    <bean id="iceCream1"
+          class="com.cxs.ssm.spring.scope.IceCream"
+          scope="singleton"/>
+    <!--2 原型模式,每次从spring容器获得的都是⼀个新的实例-->
+    <bean id="iceCream2"
+          class="com.cxs.ssm.spring.scope.IceCream"
+          scope="prototype"/>
+
+    <!--bean装配⽅方式-->
+    <!--1 基于xml配置的bean装配⽅方式-->
+    <!--1.1、构造器器注⼊入-->
+    <bean id="person1" class="com.cxs.ssm.spring.assemble.xml.Person" >
+        <constructor-arg index="0" value="20010501" />
+        <constructor-arg index="1" value="张⼀一帆" />
+        <constructor-arg index="2" value="男" />
+        <constructor-arg index="3" value="zhangyifan@hbxy.cn" />
+    </bean>
+    <!--1.2、属性注⼊入-->
+    <bean id="person2" class="com.cxs.ssm.spring.assemble.xml.Person" >
+        <property name="id" value="20010502" />
+        <property name="name" value="李李⼤大壮" />
+        <property name="sex" value="男" />
+        <property name="email" value="lidazhuang@hbxy.cn" />
+    </bean>
+
+    <!--配置⾃动扫描包路径-->
+    <!--**通配符代表任意层级的包-->
+    <context:component-scan
+            base-package="com.**.annotation" />
+</beans>

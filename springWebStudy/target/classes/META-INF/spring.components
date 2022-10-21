@@ -1,0 +1,7 @@
+com.cxs.ssm.book.controller.BookController=org.springframework.stereotype.Component
+com.cxs.ssm.party.controller.PartyController=org.springframework.stereotype.Component
+com.cxs.ssm.party.model.Party$PartyServiceImpl=org.springframework.stereotype.Component
+com.cxs.ssm.party.service.impl.PartyServiceImpl=org.springframework.stereotype.Component
+com.cxs.ssm.springmvc.controller.FirstController=org.springframework.stereotype.Component
+com.cxs.ssm.springmvc.controller.SecondController=org.springframework.stereotype.Component
+com.cxs.ssm.springmvc.controller.ThirdController=org.springframework.stereotype.Component
